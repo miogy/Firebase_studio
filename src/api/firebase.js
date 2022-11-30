@@ -39,7 +39,6 @@ async function adminUser(user) {
   return get(ref(database, "admins")).then((snapshot) => {
     if (snapshot.exists()) {
       const admins = snapshot.val();
-      console.log(admins);
       const isAdmin = admins.includes(user.uid);
       return {
         ...user,

@@ -10,6 +10,7 @@ import NewProduct from "./page/NewProduct";
 import ProductDetail from "./page/ProductDetail";
 import MyCart from "./page/MyCart";
 import { RouterProvider } from "react-router-dom";
+import ProtectedRoute from "./page/ProtectedRoute";
 
 const router = createBrowserRouter([
   {
@@ -21,7 +22,11 @@ const router = createBrowserRouter([
       { path: "/products", element: <AllProducts /> },
       {
         path: "/products/new",
-        element: <NewProduct />,
+        element: (
+          <ProtectedRoute repuireAdmin={true}>
+            <NewProduct />
+          </ProtectedRoute>
+        ),
       },
       {
         path: "/products/:id",
@@ -29,7 +34,11 @@ const router = createBrowserRouter([
       },
       {
         path: "/carts",
-        element: <MyCart />,
+        element: (
+          <ProtectedRoute>
+            <MyCart />
+          </ProtectedRoute>
+        ),
       },
     ],
   },
