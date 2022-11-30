@@ -1,7 +1,12 @@
 import { initializeApp } from "firebase/app";
 //1-1.firebase 프로젝트 설정
-import { getAuth, signInWithPopup, GoogleAuthProvider } from "firebase/auth";
-
+import {
+  getAuth,
+  signInWithPopup,
+  GoogleAuthProvider,
+  signOut,
+  onAuthStateChanged,
+} from "firebase/auth";
 //2-1.Authentication=>문서이동=>빌드=>인증=>Web=>google
 
 //1-2.프로젝트 설정에서 가져오기
@@ -15,32 +20,30 @@ const firebaseConfig = {
 const app = initializeApp(firebaseConfig);
 //1-3.초기화
 const auth = getAuth();
-//2-2.Authentication=>문서이동=>빌드=>인증=>Web=>google가져오기
+//2-2. 로그인 로그아웃 & 상태관리
 const provider = new GoogleAuthProvider();
 //2-3.Authentication=>문서이동=>빌드=>인증=>Web=>google가져오기
 
-//firebase안에서 로그인기능을 만들어준다.
-export function login() {
+//3. signInWithPopup import => login()생성
+export async function login() {
+  //async:비동기함수
   signInWithPopup(auth, provider)
     .then((result) => {
       const user = result.user;
       console.log(user);
+      return user;
     })
     .catch(console.error);
 }
 
-// 사용자가 로그인할때 필요한 함수=>
-// signInWithPopup(auth, provider)
-//   .then((result) => {
-//     const credential = GoogleAuthProvider.credentialFromResult(result);
-//     const token = credential.accessToken;
+//4. signOut import => logout()생성
+export async function logout() {
+  return signOut(auth).then(() => null);
+}
 
-//     const user = result.user;
-//   })
-//   .catch((error) => {
-//     const errorCode = error.code;
-//     const errorMessage = error.message;
-//     const email = error.customData.email;
-//     const credential = GoogleAuthProvider.credentialFromError(error);
-//   });
-//2-2.Authentication=>문서이동=>빌드=>인증=>Web=>google가져오기
+//5. login과 logout 상태관리
+export function onUserStateChange(callback) {
+  onAuthStateChanged(auth, (user) => {
+    callback(user);
+  });
+}
