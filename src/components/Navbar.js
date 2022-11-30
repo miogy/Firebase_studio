@@ -14,7 +14,7 @@ function Navbar() {
       </Link>
       <nav className="flex items-center gap-4 font-semibold">
         <Link to="/products">Products</Link>
-        {user && <Link to="/cart">Carts</Link>}
+        {user && <Link to="/carts">Carts</Link>}
         {user && user.isAdmin && <Link to="/products/new">New</Link>}
 
         {user && <User user={user} />}
