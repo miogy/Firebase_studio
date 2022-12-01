@@ -1,4 +1,5 @@
 import { useState } from "react";
+import { addNewProduct } from "../api/firebase";
 import { uploadImage } from "../api/uploader";
 import Button from "../components/ui/Button";
 
@@ -18,12 +19,13 @@ function NewProduct() {
     e.preventDefault();
     uploadImage(file).then((url) => {
       console.log(url);
+      addNewProduct(product, url);
     });
   };
   return (
     <section>
       {file && <img src={URL.createObjectURL(file)} alt="local file" />}
-      <form onSubmit={handleSubmit}>
+      <form onSubmit={handleSubmit} className="flex flex-col">
         <input
           type="file"
           accept="image/*"

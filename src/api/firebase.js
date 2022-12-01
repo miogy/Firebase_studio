@@ -1,4 +1,5 @@
 import { initializeApp } from "firebase/app";
+import { v4 as uuid } from "uuid";
 import {
   getAuth,
   signInWithPopup,
@@ -6,7 +7,7 @@ import {
   signOut,
   onAuthStateChanged,
 } from "firebase/auth";
-import { getDatabase, ref, child, get } from "firebase/database";
+import { getDatabase, ref, set, get } from "firebase/database";
 
 const firebaseConfig = {
   apiKey: process.env.REACT_APP_FIREBASE_API_KEY,
@@ -28,6 +29,7 @@ export function logout() {
   signOut(auth);
 }
 
+//사용자의 상태를 확인
 export function onUserStateChange(callback) {
   onAuthStateChanged(auth, async (user) => {
     const updatedUser = user ? await adminUser(user) : null;
@@ -35,6 +37,7 @@ export function onUserStateChange(callback) {
   });
 }
 
+//인가
 async function adminUser(user) {
   return get(ref(database, "admins")).then((snapshot) => {
     if (snapshot.exists()) {
@@ -46,5 +49,17 @@ async function adminUser(user) {
       };
     }
     return user;
+  });
+}
+
+//실시간 등록
+export async function addNewProduct(product, imageUrl) {
+  const id = uuid();
+  set(ref(database, `products/${id}`), {
+    ...product,
+    id,
+    // price: parseInt(product.price),
+    image: imageUrl,
+    options: product.options.split(","),
   });
 }
