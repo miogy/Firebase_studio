@@ -1,7 +1,9 @@
+import Products from "../components/Products";
+
 function AllProducts() {
   return (
     <div>
-      <h1>AllProducts</h1>
+      <Products />
     </div>
   );
 }
