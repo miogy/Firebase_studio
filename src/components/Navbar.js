@@ -2,7 +2,7 @@ import { Link } from "react-router-dom";
 import { FiShoppingBag, FiMenu } from "react-icons/fi";
 import User from "./User";
 import Button from "./ui/Button";
-import { useAuthContext } from "./context/AuthContext";
+import { useAuthContext } from "../context/AuthContext";
 import { useState } from "react";
 
 function Navbar() {

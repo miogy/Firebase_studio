@@ -2,9 +2,9 @@
 
 ### 적용기술
 
-React js, CRA, React-Router-Dom, react-query, uuid
-Firebase,
-Tailwind, React-icons,
+- React js, CRA, React-Router-Dom, react-query, uuid
+- Firebase,
+- Tailwind, React-icons,
 
 ### Firebase(Web) & Login(Google)
 

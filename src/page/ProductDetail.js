@@ -1,8 +1,12 @@
 import { useState } from "react";
 import { useLocation } from "react-router-dom";
+import { addOrUpdateToCart } from "../api/firebase";
 import Button from "../components/ui/Button";
+import { useAuthContext } from "../context/AuthContext";
 
 function ProductDetail() {
+  const { uid } = useAuthContext();
+  //AuthContext에 uid: user && user.uid도 추가로 보내줌
   const {
     state: {
       product: { id, image, title, description, category, options },
@@ -10,7 +14,11 @@ function ProductDetail() {
   } = useLocation();
   const [selected, setSelected] = useState(options && options[0]);
   const handleSelect = (e) => setSelected(e.target.value);
-  const handleClick = () => {};
+  const handleClick = (e) => {
+    const product = { id, image, title, options: selected, quantity: 1 };
+    //quantity:1 수량 1
+    addOrUpdateToCart(uid, product);
+  };
   return (
     <section className="pt-20">
       <p className="mx-12 mt-4 text-gray-600">{category}</p>
