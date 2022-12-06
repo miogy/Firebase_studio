@@ -8,7 +8,7 @@ import Home from "./page/Home";
 import AllProducts from "./page/AllProducts";
 import NewProduct from "./page/NewProduct";
 import ProductDetail from "./page/ProductDetail";
-import MyCart from "./page/MyCart";
+import MyWish from "./page/MyWish";
 import { RouterProvider } from "react-router-dom";
 import ProtectedRoute from "./page/ProtectedRoute";
 
@@ -36,7 +36,7 @@ const router = createBrowserRouter([
         path: "/carts",
         element: (
           <ProtectedRoute>
-            <MyCart />
+            <MyWish />
           </ProtectedRoute>
         ),
       },

@@ -1,3 +1,4 @@
+import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { useState } from "react";
 import { addNewProduct } from "../api/firebase";
 import { uploadImage } from "../api/uploader";
@@ -8,6 +9,16 @@ function NewProduct() {
   const [file, setFile] = useState();
   const [isUploading, setIsUploading] = useState(false);
   const [success, setSuccess] = useState();
+  const queryClient = useQueryClient();
+
+  //mutation
+  const addProduct = useMutation(
+    ({ product, url }) => addNewProduct(product, url),
+    {
+      onSuccess: () => queryClient.invalidateQueries(["products"]),
+    }
+  );
+
   const handleChange = (e) => {
     const { name, value, files } = e.target;
     //imgfile
@@ -22,18 +33,22 @@ function NewProduct() {
     setIsUploading(true);
     uploadImage(file)
       .then((url) => {
-        console.log(url);
-        addNewProduct(product, url).then(() => {
-          setSuccess("등록 성공!");
-          setTimeout(() => {
-            setSuccess(null);
-          }, 3000);
-        });
+        addProduct.mutate(
+          { product, url },
+          {
+            onSuccess: () => {
+              setSuccess("등록 성공!");
+              setTimeout(() => {
+                setSuccess(null);
+              }, 3000);
+            },
+          }
+        ); //mutate호출
       })
       .finally(() => setIsUploading(false));
   };
   return (
-    <section className="max-w-md text-center mx-auto my-auto mt-6">
+    <section className="max-w-md text-center mx-auto my-auto mt-6 pt-14 ">
       <h2 className="w-full text-2xl font-bold my-8">New Item</h2>
       {success && <p className="my-2">👏{success}</p>}
       {file && (

@@ -1,9 +1,11 @@
 import { Link } from "react-router-dom";
 import { FiShoppingBag, FiMenu } from "react-icons/fi";
+import { AiFillFolderAdd } from "react-icons/ai";
 import User from "./User";
 import Button from "./ui/Button";
 import { useAuthContext } from "../context/AuthContext";
 import { useState } from "react";
+import WishStatus from "./WishStatus";
 
 function Navbar() {
   const { user, login, logout } = useAuthContext();
@@ -23,8 +25,16 @@ function Navbar() {
       </Link>
       <nav className="flex items-center gap-4 font-semibold hidden md:flex">
         <Link to="/products">Products</Link>
-        {user && <Link to="/carts">Carts</Link>}
-        {user && user.isAdmin && <Link to="/products/new">New</Link>}
+        {user && (
+          <Link to="/carts">
+            <WishStatus />
+          </Link>
+        )}
+        {user && user.isAdmin && (
+          <Link to="/products/new">
+            <AiFillFolderAdd className="text-4xl" />
+          </Link>
+        )}
 
         {user && <User user={user} />}
         {!user && <Button text="Login" onClick={login}></Button>}
