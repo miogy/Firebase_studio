@@ -15,10 +15,10 @@ function ProductCard({
     >
       <img className="w-full" src={image} alt={title} />
 
-      <div className="mt-2 px-8 text-lg flex justify-between items-center ">
+      <div className="mt-2 md:px-3 px-6 text-lg flex justify-between items-center ">
         <h3 className="truncate font-semibold mr-10 w-1/2">{title}</h3>
         <p>
-          <strong className=" font-light text-gray-700">Brand</strong>
+          <strong className=" font-light text-gray-700 ">Brand</strong>
           <span className="block text-sm ">{description}</span>
         </p>
       </div>
